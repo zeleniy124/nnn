@@ -57,6 +57,7 @@ export default {
   },
   mounted() {
     this.handleResize(); // Check screen size on mount
+    document.title = "front dev paal"
     window.addEventListener('resize', this.handleResize); // Adjust on window resize
   },
   beforeUnmount() {
