@@ -1,7 +1,8 @@
 <template>
   <header class="custom-top-bar">
     <v-container fluid class="pa-0">
-      <v-row align="center" justify="end" class="py-0 px-4">
+      <v-row align="center" justify="space-between" class="py-0 px-4">
+        <p class="pool pl-4">Rewards & Staking</p>
         <!-- Check if there are already connected wallets -->
         <div v-if="alreadyConnectedWallets.length > 0" class="wallet-info d-flex align-items-center">
           <!-- Dynamically display wallet icon and formatted address -->
@@ -150,7 +151,12 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-
+.pool {
+  font-size: 1.313rem;
+  font-weight: 700;
+  color: white;
+   /* Adjust padding for visual spacing */
+}
 .custom-top-bar {
   background-color: transparent;
   height: auto !important;

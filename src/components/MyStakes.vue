@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="12" class="pd">
       <div class="my-stakes ">
-        <h2 class="stakes-title">My Stakes & Rewards</h2>
+        <h2 class="stakes-title pl-4">My Stakes & Rewards</h2>
         <v-card class="wallet-card px-6 py-15">
           <v-card-text class="d-flex flex-column align-center justify-center text-center ">
             <img

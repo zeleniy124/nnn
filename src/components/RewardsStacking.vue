@@ -1,11 +1,12 @@
 <template>
-  <v-col cols="6">
-    <p class="pool">Rewards & Staking</p>
-    <p class="pool pt-4">Airdrop</p>
-    <p class="desc pt-1 pb-2">Connect your wallet to verify eligibility for claiming $PAAL airdrop.</p>
-    <v-btn class="connect-wallet-btn pa-0" @click="callContract">Claim</v-btn>
-    <p class="spaal pt-3 align-center pb-1">108.900 $PAAL claimed/72%</p>
-    <v-progress-linear model-value="72" color="#6d28d9" height="10" background-color="#ffffff" class="progress-bar"></v-progress-linear>
+  <v-col cols="6" class="pa-4 pl-0 pt-5">
+    <v-col cols="12" class=" outline pa-4 pl-4 pt-2">
+      <p class="pool">Airdrop</p>
+      <p class="desc pt-1 pb-2">Connect your wallet to verify eligibility for claiming $PAAL airdrop.</p>
+      <v-btn class="connect-wallet-btn pa-0" @click="callContract">Claim</v-btn>
+      <p class="spaal pt-3 align-center pb-1">108,900 $PAAL claimed/72%</p>
+      <v-progress-linear model-value="72" color="#6d28d9" height="10" background-color="#ffffff" class="progress-bar"></v-progress-linear>
+    </v-col>
   </v-col>
 </template>
 
@@ -68,11 +69,16 @@ export default {
 </script>
 
 <style>
+.outline {
+  border: 0.1px solid rgb(224 217 217 / .3);
+  border-radius: .75rem;
+  padding-top: 4rem;
+}
 .pool {
   font-size: 1.313rem;
   font-weight: 700;
   color: white;
-  padding-top: 4rem; /* Adjust padding for visual spacing */
+   /* Adjust padding for visual spacing */
 }
 
 .desc {

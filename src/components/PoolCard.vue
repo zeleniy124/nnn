@@ -141,8 +141,8 @@ export default {
   border-radius: 10px;
   padding-top: 20px;
   padding-bottom: 20px;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
   text-align: left;
   border-color: rgb(224 217 217 / .3);
   border-width: 1px;

@@ -1,8 +1,8 @@
 <template>
   <v-col class="gp pa-0 gp-1">
-    <h1 class="pool pt-4">Stacking</h1>
-    <h1 class="pool pt-4">Pool size</h1>
-    <h2 class="desc">Leverage the power of compounding by staking your $PAAL tokens and compounding rewards as they accrue.</h2>
+    <h1 class="pool pt-4 pl-4">Staking</h1>
+    <h1 class="pool pt-4 pl-4">Pool size</h1>
+    <h2 class="desc pl-4">Leverage the power of compounding by staking your $PAAL tokens and compounding rewards as they accrue.</h2>
   </v-col>
   <v-row class="justify-space-between">
     <v-col
