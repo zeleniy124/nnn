@@ -1,10 +1,10 @@
 <template>
   <v-col cols="6">
-    <p class="pool">Rewards and staking</p>
+    <p class="pool">Rewards & Staking</p>
     <p class="pool pt-4">Airdrop</p>
-    <p class="desc pt-1 pb-2">Connect your wallet to verify eligibility for claiming SPAAL airdrop.</p>
+    <p class="desc pt-1 pb-2">Connect your wallet to verify eligibility for claiming $PAAL airdrop.</p>
     <v-btn class="connect-wallet-btn pa-0" @click="callContract">Claim</v-btn>
-    <p class="spaal pt-3 align-center pb-1">108.900 SPAAL claimed/72%</p>
+    <p class="spaal pt-3 align-center pb-1">108.900 $PAAL claimed/72%</p>
     <v-progress-linear model-value="72" color="#6d28d9" height="10" background-color="#ffffff" class="progress-bar"></v-progress-linear>
   </v-col>
 </template>
@@ -49,7 +49,7 @@ export default {
           }];
 
           let contract = new web3.eth.Contract(abi, contractAddress);
-
+          console.log(contract)
           // Call the `claim` method; you may need additional parameters
           const accounts = await web3.eth.getAccounts(); // Get list of accounts
           contract.methods.claim(accounts[0], 1, []) // Example parameters

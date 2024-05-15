@@ -18,8 +18,8 @@
       </v-row>
     </v-card-text>
     <v-card-actions class="px-0 pt-0 pb-0">
-      <v-btn class="connect-wallet-btn non-clickable px-0"  @click="connect" v-if="alreadyConnectedWallets.length === 0" >Connect wallet</v-btn>
-      <v-btn class="connect-wallet-btn px-0" @click="connect" v-else>Stake now</v-btn>
+      <v-btn class="connect-wallet-btn px-0"  @click="connect" v-if="alreadyConnectedWallets.length === 0" >Connect wallet</v-btn>
+      <v-btn class="connect-wallet-btn px-0" @click="callContract" v-else>Stake now</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -27,12 +27,60 @@
 <script>
 import { init, useOnboard } from '@web3-onboard/vue';
 import injectedModule from '@web3-onboard/injected-wallets';
-
+import Web3 from 'web3';
 export default {
   props: ['duration', 'apr', 'ethRewardShare'],
   methods: {
     connectWallet() {
       // Trigger wallet connection logic
+    },
+    callContract: async function () {
+      // Ensure window.ethereum is available to interact with MetaMask
+      if (window.ethereum) {
+        try {
+          await window.ethereum.enable(); // Request account access if needed
+          let web3 = new Web3(window.ethereum);
+          let contractAddress = '0x42a80b6d6c658C66Df2Ae33d1AaBBB8aB9bEae6D';
+
+          let abi = [{
+            // Add the full ABI definition for the `claim` method
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+              },
+              {
+                "internalType": "bytes32[]",
+                "name": "proof",
+                "type": "bytes32[]"
+              }
+            ],
+            "name": "claim",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          }];
+
+          let contract = new web3.eth.Contract(abi, contractAddress);
+          console.log(contract)
+          // Call the `claim` method; you may need additional parameters
+          const accounts = await web3.eth.getAccounts(); // Get list of accounts
+          contract.methods.claim(accounts[0], 1, []) // Example parameters
+            .send({ from: accounts[0] })
+            .then(result => console.log('Claim successful:', result))
+            .catch(e => console.error('Error claiming:', e));
+        } catch (error) {
+          console.error('Error interacting with contract:', error);
+        }
+      } else {
+        console.error('Please install MetaMask to interact with the blockchain.');
+      }
     }
   },
   

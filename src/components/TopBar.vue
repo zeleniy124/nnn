@@ -1,13 +1,12 @@
 <template>
   <header class="custom-top-bar">
     <v-container fluid class="pa-0">
-      <v-row align="center" justify="space-between" class="py-0 px-4">
-        <h1 class="text_main">Staking</h1>
+      <v-row align="center" justify="end" class="py-0 px-4">
         <!-- Check if there are already connected wallets -->
         <div v-if="alreadyConnectedWallets.length > 0" class="wallet-info d-flex align-items-center">
           <!-- Dynamically display wallet icon and formatted address -->
-          <img v-if="formattedAddress" :src="walletIcon" class="wallet-icon"/>
-          <span class="text_main wallet-address">{{ formattedAddress }}</span>
+          <img v-if="formattedWalletAddress" :src="walletIcon" class="wallet-icon"/>
+          <span class="text_main wallet-address">{{ formattedWalletAddress }}</span>
           <v-btn class="disconnect_btn ml-auto" @click="disconnect">
             Disconnect wallet
           </v-btn>
@@ -22,7 +21,7 @@
 
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { init, useOnboard } from '@web3-onboard/vue';
 import injectedModule from '@web3-onboard/injected-wallets';
 import walletConnectModule from '@web3-onboard/walletconnect';
@@ -96,12 +95,33 @@ export default {
     const walletAddress = ref('');
     const walletIcon = require('@/assets/wallet.svg'); // Load the wallet icon dynamically
 
-    const formattedAddress = computed(() => {
+    async function fetchWalletAddress() {
+      if (window.ethereum) {
+        const web3 = new Web3(window.ethereum);
+        try {
+          const accounts = await web3.eth.getAccounts();
+          if (accounts.length > 0) {
+            walletAddress.value = accounts[0];
+          } else {
+            walletAddress.value = '';
+          }
+        } catch (error) {
+          console.error("Error fetching accounts:", error);
+          walletAddress.value = '';
+        }
+      }
+    }
+
+    // Computed property for formatting the wallet address
+    const formattedWalletAddress = computed(() => {
       if (walletAddress.value.length > 0) {
         return `${walletAddress.value.substring(0, 5)}...${walletAddress.value.substring(walletAddress.value.length - 4)}`;
       }
       return '';
     });
+
+    // Fetch the wallet address on component mount
+    onMounted(fetchWalletAddress);
 
     const disconnect = async () => {
       try {
@@ -117,19 +137,13 @@ export default {
       console.log("Attempting to connect wallet...");
       try {
         await connectWallet();
-        if (window.ethereum) {
-          const web3Instance = new Web3(window.ethereum);
-          const accounts = await web3Instance.eth.getAccounts();
-          if (accounts.length > 0) {
-            walletAddress.value = accounts[0];
-          }
-        }
+        
       } catch (error) {
         console.error('Error connecting to wallet:', error);
       }
     };
 
-    return { connect, disconnect, alreadyConnectedWallets, walletAddress, formattedAddress, walletIcon };
+    return { connect, disconnect, alreadyConnectedWallets, walletAddress, formattedWalletAddress, walletIcon };
   }
 };
 </script>
